@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Manager</title>
+    <style>
+        /* Base Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+        width: 100%;
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .header-nav {
+        display: flex;
+        align-items: center;
+      }
+
+      .header-nav a {
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+        font-size: 18px;
+      }
+
+      .header-nav a:hover {
+        text-decoration: underline;
+      }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        /* Table Container */
+        .table-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Table Styling */
+        .event-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1em;
+            color: #333;
+        }
+
+        .event-table th,
+        .event-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .event-table th {
+            background-color: #007BFF;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .event-table tbody tr:nth-child(even) {
+            background-color: #f7f7f7;
+        }
+
+        .event-table tbody tr:hover {
+            background-color: #e9f5ff;
+        }
+
+        /* Action Link Styling */
+        .delete-link {
+            color: #dc3545;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 6px 12px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background-color: #f8d7da;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .delete-link:hover {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Coures Manager</h1>
+        <div class="header-nav">
+            <%= render partial: "partial/header" %>
+        </div>
+    </header>
+    <h1>Show All Courses</h1>
+    <div class="table-container">
+        <table class="event-table">
+            <thead>
+                <tr>
+                    <th> Title</th>
+                    <th> Description</th>
+                    <th> Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><%= @course.title %></td>
+                    <td><%= @course.description %></td>
+                    <td><%= @course.price %></td>
+                    <td>
+                       <% if current_user.role == 'teacher' %>
+                            <%= link_to "edit", edit_course_path(@course), class: "delete-link" %>
+                            <%= button_to "Delete", course_path(@course), method: :delete, data:{
+                                turbo_confirm: "are you sure!"
+                            }, class: "delete-link"%>
+                       <% else %>
+
+                       <% end %>
+                      <%= link_to "Home Page" , '/courses', class: "delete-link"%>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
